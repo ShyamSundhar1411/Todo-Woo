@@ -38,12 +38,6 @@ def loginuser(request):
             return redirect('currenttodos')
 
 @login_required
-def logoutuser(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('home')
-
-@login_required
 def createtodo(request):
     if request.method == 'GET':
         return render(request, 'todo/createtodo.html', {'form':TodoForm()})

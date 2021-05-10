@@ -13,21 +13,33 @@ module.exports = {
          * Templates in other django apps (BASE_DIR/<any_app_name>/templates).
          * Adjust the following line to match your project structure.
          */
-        '../../todo/templates/todo/base.html',
+        '../../todo/templates/todo/*.html',
+
 
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
+      backgroundColor: theme => ({
+       'primary': '#3490dc',
+       'secondary': '#ffed4a',
+       'danger': '#e3342f',
+     }),
         extend: {
           animation: {
             'spin-slow':'spin 3s linear infinite',
         },
-    }
-  },
+
+  }
+},
     variants: {
         extend: {
           animation: ['hover', 'focus'],
           backgroundBlendMode: ['hover', 'focus'],
+          divideColor: ['group-hover'],
+          gradientColorStops: ['active', 'group-hover'],
+          padding: ['hover'],
+          textColor: ['responsive', 'hover', 'focus', 'group-hover'],
+          backgroundColor: ['active'],
         },
     },
     plugins: [

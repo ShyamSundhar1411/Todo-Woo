@@ -1,30 +1,51 @@
 {% extends "todo/base.html" %}
 
 {% block content %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-10">
-            {% if todos %}
-                 <h1>{{ todos.count }} Current Todo{{ todos.count|pluralize }}</h1>
-            {% else %}
-                           <h1>Current Todos</h1>
-            {% endif %}
-        </div>
-    </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-10">
-        {% if todos %}
-            <div class="list-group">
-                {% for todo in todos %}
-                    <a href="{% url 'viewtodo' todo.id %}" class="list-group-item list-group-item-action{% if todo.important %} list-group-item-danger{% endif %}"><b>{{ todo.title }}</b>{% if todo.memo %} - {{ todo.memo|truncatechars:30 }}{% endif %}</a>
-                {% endfor %}
-            </div>
+<div class="row justify-content-center mt-5">
+  <div class="col-md-10">
+    {% if todos %}
+    <h1>{{ todos.count }} Current Todo{{ todos.count|pluralize }}</h1>
+    {% else %}
+    <h1>Current Todos</h1>
+    {% endif %}
+  </div>
+</div>
+<div class="row justify-content-center mt-5">
+  <div class="col-md-10">
+    {% if todos %}
+    <div class="list-group rounded-lg">
+      {% for todo in todos %}
+        {% if todo.important %}
+      <div class="bg-red-100 bg-opacity-75 group hover:bg-red-500">
         {% else %}
-            <div class="text-center">
-                <h2>Looks like you don't have any todos! Nice work.</h2>
-            <br>
-            <a role="button" class="btn btn-primary" href="{% url 'createtodo' %}">New Todo</a>
-            </div>
+      <div class = "bg-blue-200 bg-opacity-50 group hover:bg-indigo-500">
         {% endif %}
+        <div class="max-w-7xl mx-auto py-1 px-3 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+            </span>
+
+              <p class="ml-3 font-medium group-hover:text-white focus:ring text-white- truncate">
+                  {{todo.title}}
+              </p>
+            </div>
+            <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-1 sm:mt-0 sm:w-auto">
+              <a href = "{% url 'viewtodo' todo.id %}" class = 'text-decoration-none'><button   class="group px-3 py--1 border border-transparent rounded-md shadow-sm flex p-2 rounded-md hover:bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 hover:shadow-lg">
+                <p class = 'group-hover:text-white'>Edit</p>
+              </button></a>
+            </div>
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+    {% else %}
+    <div class="text-center">
+      <h2>Looks like you don't have any todos! Nice work.</h2>
+      <br>
+      <a role="button" class="btn btn-primary" href="{% url 'createtodo' %}">New Todo</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
