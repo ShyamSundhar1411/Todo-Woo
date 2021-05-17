@@ -16,31 +16,52 @@
     <title>Todo Woo</title>
 </head>
 <body>
-  <nav class="bg-gray-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center">
-          <div class="flex-shrink-0">
-              <a href = '{% url "home" %}' class = 'text-decoration-none'><img class="h-8 w-8" src="{% static 'todo\logo.png' %}" alt="Workflow">
-            </div>
-            <h1 class = 'text-white font-medium  px-3 py-2 rounded-md'>ToDo</h1></a>
-            <div class="hidden md:block">
-              <div class="ml-8 flex items-baseline space-x-4">
-                {% if user.is_authenticated %}
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="{% url 'currenttodos' %}" class="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Current Todos</a>
+  <nav class="navbar navbar-expand-md navbar-light bg-warning">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+           <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
+          <span>Todo Woo</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+      {% if user.is_authenticated %}
+          <ul class="navbar-nav mr-auto">
 
-                <a href="{% url 'completedtodos' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Completed Todos</a>
+                  <li class="nav-item {{ current }}">
+                      <a class="nav-link" href="{% url 'currenttodos' %}">Current</a>
+                  </li>
+                  <li class="nav-item {{ completed }}">
+                      <a class="nav-link" href="{% url 'completedtodos' %}">Completed</a>
+                  </li>
+                  <li class="nav-item {{ create }}">
+                      <a class="nav-link" href="{% url 'createtodo' %}">Create</a>
+                  </li>
 
-                <a href="{% url 'createtodo' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Create Todo</a>
-                <a href="{% url 'logoutuser' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none ">Logout</a>
-                {% else %}
-                <a href="{% url 'loginuser' %}" class="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Login</a>
-
-                <a href="{% url 'signupuser' %}" class="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Signup</a>
-              </div>
+          </ul>
+      {% endif %}
+      <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <a href="{% url 'profileview' user.username %}" class="nav-link">Profile</a>
+              </li>
+                  <li class="nav-item">
+                      <a href="{% url 'logoutuser' %}" class="nav-link">Logout</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'signupuser' %}">Sign Up</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+                  </li>
               {% endif %}
-</nav>
+          </ul>
+      </div>
+  </div>
+  </nav>
+
 <div class="container">
 {% block content %}{% endblock %}
 </div>
