@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from todo import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,7 +36,7 @@ urlpatterns = [
     path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
     path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'),
     path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
-    
+    path('todo/account/<slug:slug>/profile',views.UpdateProfile.as_view(),name = 'updateprofile'),
     # API
     path('api/', include('api.urls')),
-]
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

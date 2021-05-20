@@ -4,13 +4,23 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
-from .models import Todo
+from django.http.response import Http404
+from django.urls import reverse_lazy
+from django.views import generic
+from .models import Todo,Profile
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'todo/home.html')
 
+class UpdateProfile(generic.UpdateView):
+    model = Profile
+    slug_field = 'user.username'
+    template_name = 'todo/updateprofile.html'
+    success_url = reverse_lazy('updateprofile')
+    def get_object(self,query_set = None):
+        return self.request.user
 def signupuser(request):
     if request.method == 'GET':
         return render(request, 'todo/signupuser.html', {'form':UserCreationForm()})
